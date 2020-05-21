@@ -12,7 +12,7 @@ public class GlobalRestControllerAdviceExceptionHandler {
 	
 	@ExceptionHandler(UserNameNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public CustomErrorDetails usernameNotFound(UserNameNotFoundException ex) {
+	public CustomErrorDetails userNameNotFound(UserNameNotFoundException ex) {
 		return new CustomErrorDetails(ex.getMessage(), "-- UserName Not Found --", new Date());
 	}
 }

@@ -1,3 +1,10 @@
 insert into users(id, user_name, first_name, last_name, email_address, role, ssn) values(101, 'pat@gmail.com', 'Pat', 'Mashaba', 'pat@gmail.com', 'admin', 'ssn101')
 insert into users(id, user_name, first_name, last_name, email_address, role, ssn) values(102, 'lerry@gmail.com', 'Lerry', 'Mashaba', 'lerry@gmail.com', 'user', 'ssn102')
 insert into users(id, user_name, first_name, last_name, email_address, role, ssn) values(103, 'ignatia@gmail.com', 'Ignatia', 'Mashaba', 'ignatia@gmail.com', 'user', 'ssn103')
+
+insert into orders(order_id, order_description, user_id) values (50001, 'JPA Fundamental Course', 101)
+insert into orders(order_id, order_description, user_id) values (50002, 'HTML 5', 101)
+insert into orders(order_id, order_description, user_id) values (50003, 'Spring Boot 2', 101)
+insert into orders(order_id, order_description, user_id) values (50004, 'JPA Fundamental Course', 102)
+insert into orders(order_id, order_description, user_id) values (50005, 'CSS 3', 102)
+insert into orders(order_id, order_description, user_id) values (50006, 'JPA Fundamental Course', 103)

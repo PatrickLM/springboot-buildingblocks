@@ -47,6 +47,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(customErrorDetail, HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(UserNotFoundException.class)
+	public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex,
+			WebRequest request) {
+		CustomErrorDetails customErrorDetail = new CustomErrorDetails(ex.getMessage(), request.getDescription(false),
+				new Date());
+
+		return new ResponseEntity<>(customErrorDetail, HttpStatus.NOT_FOUND);
+	}
+	
 	// ConstraintViolationException
 	// Validate PathVariable from Controller
 	@ExceptionHandler(ConstraintViolationException.class)
@@ -58,5 +67,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(customErrorDetail, HttpStatus.BAD_REQUEST);
 	}
+	
+	
 
 }
