@@ -3,10 +3,14 @@ package com.learnrestservice.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +24,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.learnrestservice.entities.User;
 import com.learnrestservice.exceptions.UserExistsException;
+import com.learnrestservice.exceptions.UserNameNotFoundException;
 import com.learnrestservice.exceptions.UserNotFoundException;
 import com.learnrestservice.services.UserService;
 
+@Validated
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -36,7 +42,7 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public Optional<User> getUserById(@PathVariable("id") Long id) {
+	public Optional<User> getUserById(@PathVariable("id") @Min(1) Long id) {
 
 		try {
 			return userSer.getUserById(id);
@@ -46,12 +52,17 @@ public class UserController {
 	}
 
 	@GetMapping("/byusername/{username}")
-	public User getUserByUsername(@PathVariable("username") String username) {
-		return userSer.getUserByUsername(username);
+	public User getUserByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
+		User user =  userSer.getUserByUsername(username);
+		if(user == null) {
+			throw new UserNameNotFoundException("Username: '"+username+"' not found in User Repository");
+		}
+		
+		return user;
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder builder) {
+	public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder) {
 		try {
 
 			userSer.createUser(user);
